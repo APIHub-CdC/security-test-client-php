@@ -1,24 +1,35 @@
 <?php
 namespace APIHub\Client;
 
+use Security\Test\Configuration;
+use Signer\Manager\ApiException;
+use Signer\Manager\Interceptor\MiddlewareEvents;
+use Signer\Manager\Interceptor\KeyHandler;
+
 class PruebaDeSeguridadApiTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
         $password = getenv('KEY_PASSWORD');
-        $this->signer = new \APIHub\Client\Interceptor\KeyHandler(null, null, $password);
-        $events = new \APIHub\Client\Interceptor\MiddlewareEvents($this->signer);
+        $this->keypair = '/Users/globatos/Documents/CERTIFICADOS/keypair.p12';
+        $this->cert = '/Users/globatos/Documents/CERTIFICADOS/cdc_cert_1222746041.pem';
+
+        $this->signer = new \Signer\Manager\Interceptor\KeyHandler($this->keypair, $this->cert, $password);
+        $events = new MiddlewareEvents($this->signer);
         $handler = \GuzzleHttp\HandlerStack::create();
         $handler->push($events->add_signature_header('x-signature'));
         $handler->push($events->verify_signature_header('x-signature'));
 
         $client = new \GuzzleHttp\Client(['handler' => $handler]);
-        $this->apiInstance = new \APIHub\Client\Api\PruebaDeSeguridadApi($client);
+        $config = new Configuration();
+        $config->setHost('https://services.circulodecredito.com.pe/v1/securitytest');
+
+        $this->apiInstance = new \Security\Test\Api\PruebaDeSeguridadApi($client,$config);
     }
 
     public function testSecurityTest()
     {
-        $x_api_key = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+        $x_api_key = "3nxAay74GQAWZSJZekdedX52HlFViMTI";
         $body = "Esto es un mensaje de prueba";
 
         try {
