@@ -1,6 +1,6 @@
 <?php
 
-namespace APIHub\Client;
+namespace Security\Test;
 
 class ObjectSerializer
 {
@@ -165,7 +165,7 @@ class ObjectSerializer
         } else {
             $discriminator = $class::DISCRIMINATOR;
             if (!empty($discriminator) && isset($data->{$discriminator}) && is_string($data->{$discriminator})) {
-                $subclass = '\APIHub\Client\Model\\' . $data->{$discriminator};
+                $subclass = '\Security\Test\Model\\' . $data->{$discriminator};
                 if (is_subclass_of($subclass, $class)) {
                     $class = $subclass;
                 }

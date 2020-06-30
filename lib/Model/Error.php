@@ -1,6 +1,6 @@
 <?php
 
-namespace APIHub\Client\Model;
+namespace Security\Test\Model;
 
 use \ArrayAccess;
 use \APIHub\Client\ObjectSerializer;
