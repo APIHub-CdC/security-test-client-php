@@ -1,9 +1,9 @@
 <?php
 
-namespace APIHub\Client\Model;
+namespace Security\Test\Model;
 
 use \ArrayAccess;
-use \APIHub\Client\ObjectSerializer;
+use \Security\Test\ObjectSerializer;
 
 
 class Errors implements ModelInterface, ArrayAccess
